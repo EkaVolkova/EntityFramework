@@ -57,7 +57,7 @@ public class Program
                 id = int.Parse(Console.ReadLine());
                 Console.WriteLine("Введите новое имя");
                 var name = Console.ReadLine();
-                userRepository.UpdateById(id, name);
+                userRepository.UpdateNameById(id, name);
                 break;
             case nameof(Commands.show):
                 var users = userRepository.FindAll();
@@ -105,7 +105,7 @@ public class Program
                 id = int.Parse(Console.ReadLine());
                 Console.WriteLine("Введите новое название");
                 var name = Console.ReadLine();
-                userRepository.UpdateById(id, name);
+                userRepository.UpdateNameById(id, name);
                 break;
             case nameof(Commands.show):
                 var books = bookRepository.FindAll();

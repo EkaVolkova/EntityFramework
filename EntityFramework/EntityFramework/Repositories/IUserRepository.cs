@@ -12,6 +12,9 @@ namespace EntityFramework.Repositories
 
         void Delete(User user);
 
-        void UpdateById(int id, string value);
+        void UpdateNameById(int id, string value);
+
+        public void UpdateEmailById(int id, string value);
+
     }
 }

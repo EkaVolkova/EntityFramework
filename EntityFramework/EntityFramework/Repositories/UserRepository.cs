@@ -9,6 +9,10 @@ namespace EntityFramework.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        /// <summary>
+        /// Добавление нового пользователя
+        /// </summary>
+        /// <param name="user">пользователь для добавления</param>
         public void Add(User user)
         {
             using (var db = new AppContext())
@@ -22,12 +26,15 @@ namespace EntityFramework.Repositories
 
         }
 
+        /// <summary>
+        /// Удаление пользователя
+        /// </summary>
+        /// <param name="user">пользователь для удаления</param>
         public void Delete(User user)
         {
             using (var db = new AppContext())
             {
 
-                // Удаление одиночного пользователя
                 var findUser = db.Users.Where(u => u.Name == user.Name && u.Email == user.Email).ToList().FirstOrDefault();
                     
                 db.Users.Remove(findUser);
@@ -36,6 +43,10 @@ namespace EntityFramework.Repositories
             }
         }
 
+        /// <summary>
+        /// Поиск всех пользователей
+        /// </summary>
+        /// <returns></returns>
         public List<User> FindAll()
         {
             List<User> allUsers;
@@ -48,6 +59,11 @@ namespace EntityFramework.Repositories
             return allUsers;
         }
 
+        /// <summary>
+        /// Поиск пользователя по id
+        /// </summary>
+        /// <param name="id">id пользователя</param>
+        /// <returns></returns>
         public User FindById(int id)
         {
             User user;
@@ -61,7 +77,12 @@ namespace EntityFramework.Repositories
 
         }
 
-        public void UpdateById(int id, string value)
+        /// <summary>
+        /// Обновление имени пользователя по ID
+        /// </summary>
+        /// <param name="id">id пользователя</param>
+        /// <param name="value">Новое имя</param>
+        public void UpdateNameById(int id, string value)
         {
             using (var db = new AppContext())
             {
@@ -73,5 +94,26 @@ namespace EntityFramework.Repositories
 
             }
         }
+
+        /// <summary>
+        /// Обновление Email пользователя по ID
+        /// </summary>
+        /// <param name="id">id пользователя</param>
+        /// <param name="value">Новый Email</param>
+        public void UpdateEmailById(int id, string value)
+        {
+            using (var db = new AppContext())
+            {
+
+                var user = db.Users.Where(u => u.Id == id).ToList().FirstOrDefault();
+                user.Email = value;
+
+                db.SaveChanges();
+
+            }
+        }
+
+
+
     }
 }
