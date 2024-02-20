@@ -22,7 +22,8 @@ namespace EntityFramework.Repositories
             {
 
                 // Удаление книги
-                db.Books.Remove(book);
+                var findBook= db.Books.Where(b => b.Name == book.Name && b.PublishYear == book.PublishYear).ToList().FirstOrDefault();
+                db.Books.Remove(findBook);
 
                 db.SaveChanges();
             }
