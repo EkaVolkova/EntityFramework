@@ -28,7 +28,7 @@ namespace EntityFramework.Repositories
             {
 
                 // Удаление одиночного пользователя
-                var findUser = db.Users.Where(u => u.Name == user.Name && u.Email == user.Email && u.Role == user.Role).ToList().FirstOrDefault();
+                var findUser = db.Users.Where(u => u.Name == user.Name && u.Email == user.Email).ToList().FirstOrDefault();
                     
                 db.Users.Remove(findUser);
 

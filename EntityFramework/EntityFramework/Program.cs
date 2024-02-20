@@ -71,20 +71,16 @@ public class Program
                 name = Console.ReadLine();
                 Console.WriteLine("Введите Email пользователя");
                 var email = Console.ReadLine();
-                Console.WriteLine("Введите роль пользователя");
-                var role = Console.ReadLine();
 
-                userRepository.Add(new User { Email = email, Name = name, Role = role });
+                userRepository.Add(new User { Email = email, Name = name });
                 break;
             case nameof(Commands.delete):
                 Console.WriteLine("Введите имя пользователя");
                 name = Console.ReadLine();
                 Console.WriteLine("Введите Email пользователя");
                 email = Console.ReadLine();
-                Console.WriteLine("Введите роль пользователя");
-                role = Console.ReadLine();
 
-                userRepository.Delete(new User { Email = email, Name = name, Role = role });
+                userRepository.Delete(new User { Email = email, Name = name });
                 break;
             default:
                 Console.WriteLine("Неверно введена команда");
@@ -122,15 +118,15 @@ public class Program
                 Console.WriteLine("Введите название");
                 name = Console.ReadLine();
                 Console.WriteLine("Введите год издания");
-                var year = Console.ReadLine();
+                var year = uint.Parse(Console.ReadLine());
 
-                bookRepository.Add(new Book { Name = name, PublishYear = year});
+                bookRepository.Add(new Book { Name = name, PublishYear = year });
                 break;
             case nameof(Commands.delete):
                 Console.WriteLine("Введите название");
                 name = Console.ReadLine();
                 Console.WriteLine("Введите год издания");
-                year = Console.ReadLine();
+                year = uint.Parse(Console.ReadLine());
 
                 bookRepository.Delete(new Book { Name = name, PublishYear = year });
                 break;
@@ -144,24 +140,27 @@ public class Program
     private static void Main(string[] args)
     {
         string command = default;
-        while (command != nameof(Commands.stop))
+        while (true)
         {
             Console.Write("Введите название таблицы: ");
             var db = Console.ReadLine();
-            ShowHelp();
-            command = Console.ReadLine();
-            switch(db)
+            do
             {
-                case nameof(Dbs.books):
-                    CommandManagerBooks(command);
-                    break;
-                case nameof(Dbs.users):
-                    CommandManagerUser(command);
-                    break;
-                default:
-                    Console.WriteLine("Неверный выбор таблицы");
-                    break;
-            }
+                ShowHelp();
+                command = Console.ReadLine();
+                switch (db)
+                {
+                    case nameof(Dbs.books):
+                        CommandManagerBooks(command);
+                        break;
+                    case nameof(Dbs.users):
+                        CommandManagerUser(command);
+                        break;
+                    default:
+                        Console.WriteLine("Неверный выбор таблицы");
+                        break;
+                }
+            } while (command != nameof(Commands.stop));
 
 
         }
