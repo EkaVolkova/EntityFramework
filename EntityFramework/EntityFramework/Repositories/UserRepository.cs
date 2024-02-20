@@ -9,6 +9,11 @@ namespace EntityFramework.Repositories
 {
     public class UserRepository : IUserRepository
     {
+        IBookRepository bookRepository;
+        public UserRepository(IBookRepository bookRepository)
+        {
+            this.bookRepository = bookRepository;
+        }
         /// <summary>
         /// Добавление нового пользователя
         /// </summary>
@@ -113,6 +118,54 @@ namespace EntityFramework.Repositories
             }
         }
 
+        /// <summary>
+        /// Взять книгу из библиотеки
+        /// </summary>
+        /// <param name="userId">Id пользователя</param>
+        /// <param name="bookId">Id книги</param>
+        public void GetBookFromLibrary(int userId, int bookId)
+        {
+            Book book = bookRepository.FindById(bookId);
+            User user = FindById(userId);
+            using (var db = new AppContext())
+            {
+                if(!user.Books.Contains(book))
+                    user.Books.Add(book);
+
+                db.SaveChanges();
+
+            }
+        }
+
+        /// <summary>
+        /// Вернуть книгу в библиотеку
+        /// </summary>
+        /// <param name="userId">Id пользователя</param>
+        /// <param name="bookId">Id книги</param>
+        public void ReturnBookToLibrary(int userId, int bookId)
+        {
+            Book book = bookRepository.FindById(bookId);
+            User user = FindById(userId);
+            using (var db = new AppContext())
+            {
+                if (!user.Books.Contains(book))
+                    user.Books.Remove(book);
+                db.SaveChanges();
+
+            }
+        }
+
+
+        /// <summary>
+        /// Получить список книг, которые находятся у пользователя на руках
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
+        public List<Book> FindAllBooks(int userId)
+        {
+            User user = FindById(userId);
+            return user.Books.ToList();
+        }
 
 
     }

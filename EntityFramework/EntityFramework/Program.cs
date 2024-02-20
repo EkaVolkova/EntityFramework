@@ -4,8 +4,8 @@ using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 public class Program
 {
-    static IUserRepository userRepository = new UserRepository();
     static IBookRepository bookRepository = new BookRepository();
+    static IUserRepository userRepository = new UserRepository(bookRepository);
 
 
 
