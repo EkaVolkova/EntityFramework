@@ -126,14 +126,19 @@ namespace EntityFramework.Repositories
         public void GetBookFromLibrary(int userId, int bookId)
         {
             Book book = bookRepository.FindById(bookId);
-            User user = FindById(userId);
-            using (var db = new AppContext())
+            if (book.User == null)
             {
-                if(!user.Books.Contains(book))
-                    user.Books.Add(book);
+                User user = FindById(userId);
+                using (var db = new AppContext())
+                {
+                    if (!user.Books.Contains(book))
+                    {
+                        user.Books.Add(book);
+                        db.Books.Where(b => b.Id == book.Id).ToList().FirstOrDefault().User = user;
+                        db.SaveChanges();
+                    }
 
-                db.SaveChanges();
-
+                }
             }
         }
 
@@ -149,8 +154,11 @@ namespace EntityFramework.Repositories
             using (var db = new AppContext())
             {
                 if (!user.Books.Contains(book))
+                {
+                    db.Books.Where(b => b.Id == book.Id).ToList().FirstOrDefault().User = null;
                     user.Books.Remove(book);
-                db.SaveChanges();
+                    db.SaveChanges();
+                }
 
             }
         }

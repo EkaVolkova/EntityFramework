@@ -16,5 +16,12 @@ namespace EntityFramework.Repositories
 
         public void UpdateEmailById(int id, string value);
 
+        public void GetBookFromLibrary(int userId, int bookId);
+
+        public void ReturnBookToLibrary(int userId, int bookId);
+
+        public List<Book> FindAllBooks(int userId);
+
+
     }
 }

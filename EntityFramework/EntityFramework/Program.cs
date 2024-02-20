@@ -1,5 +1,7 @@
-﻿using EntityFramework.Models;
+﻿using EntityFramework.Exceptions;
+using EntityFramework.Models;
 using EntityFramework.Repositories;
+using EntityFramework.View;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 public class Program
@@ -8,161 +10,54 @@ public class Program
     static IUserRepository userRepository = new UserRepository(bookRepository);
 
 
-
-    static void ShowHelp()
-    {
-        Console.WriteLine("Список команд для работы консоли:");
-        Console.WriteLine(Commands.stop + ": прекращение работы");
-        Console.WriteLine(Commands.add + ": добавление данных");
-        Console.WriteLine(Commands.delete + ": удаление данных");
-        Console.WriteLine(Commands.update + ": обновление данных");
-        Console.WriteLine(Commands.show + ": просмотр данных");
-
-        Console.WriteLine();
-        Console.WriteLine("Введите команду: ");
-
-    }
-
-
-    enum Commands
-    {
-        stop,
-        findById,
-        findAll,
-        add,
-        delete,
-        update,
-        show
-    }
-
-    enum Dbs
-    {
-        books,
-        users
-    }
-    static void CommandManagerUser(string command)
-    {
-        switch (command)
-        {
-            case nameof(Commands.stop):
-                break;
-            case nameof(Commands.findById):
-                Console.WriteLine("Введите Id пользователя");
-                var id = int.Parse(Console.ReadLine());
-                User user = userRepository.FindById(id);
-                Console.WriteLine("Id: " + user.Id + ", Name: " + user.Name + ", Email: " + user.Email);
-                break;
-            case nameof(Commands.update):
-                Console.WriteLine("Введите Id пользователя");
-                id = int.Parse(Console.ReadLine());
-                Console.WriteLine("Введите новое имя");
-                var name = Console.ReadLine();
-                userRepository.UpdateNameById(id, name);
-                break;
-            case nameof(Commands.show):
-                var users = userRepository.FindAll();
-                foreach (var item in users)
-                {
-                    Console.WriteLine("Id: " + item.Id + ", Name: " + item.Name + ", Email: " + item.Email);
-                }
-                break;
-            case nameof(Commands.add):
-                Console.WriteLine("Введите имя пользователя");
-                name = Console.ReadLine();
-                Console.WriteLine("Введите Email пользователя");
-                var email = Console.ReadLine();
-
-                userRepository.Add(new User { Email = email, Name = name });
-                break;
-            case nameof(Commands.delete):
-                Console.WriteLine("Введите имя пользователя");
-                name = Console.ReadLine();
-                Console.WriteLine("Введите Email пользователя");
-                email = Console.ReadLine();
-
-                userRepository.Delete(new User { Email = email, Name = name });
-                break;
-            default:
-                Console.WriteLine("Неверно введена команда");
-                break;
-        }
-
-    }
-    static void CommandManagerBooks(string command)
-    {
-        switch (command)
-        {
-            case nameof(Commands.stop):
-                break;
-            case nameof(Commands.findById):
-                Console.WriteLine("Введите Id книги");
-                var id = int.Parse(Console.ReadLine());
-                Book book = bookRepository.FindById(id);
-                Console.WriteLine("Id: " + book.Id + ", Name: " + book.Name + ", Year Publisher: " + book.PublishYear);
-                break;
-            case nameof(Commands.update):
-                Console.WriteLine("Введите Id книги");
-                id = int.Parse(Console.ReadLine());
-                Console.WriteLine("Введите новое название");
-                var name = Console.ReadLine();
-                userRepository.UpdateNameById(id, name);
-                break;
-            case nameof(Commands.show):
-                var books = bookRepository.FindAll();
-                foreach (var item in books)
-                {
-                    Console.WriteLine("Id: " + item.Id + ", Name: " + item.Name + ", Year Publisher: " + item.PublishYear);
-                }
-                break;
-            case nameof(Commands.add):
-                Console.WriteLine("Введите название");
-                name = Console.ReadLine();
-                Console.WriteLine("Введите год издания");
-                var year = uint.Parse(Console.ReadLine());
-
-                bookRepository.Add(new Book { Name = name, PublishYear = year });
-                break;
-            case nameof(Commands.delete):
-                Console.WriteLine("Введите название");
-                name = Console.ReadLine();
-                Console.WriteLine("Введите год издания");
-                year = uint.Parse(Console.ReadLine());
-
-                bookRepository.Delete(new Book { Name = name, PublishYear = year });
-                break;
-            default:
-                Console.WriteLine("Неверно введена команда");
-                break;
-        }
-
-    }
+    public static UserMainView userMainView;
+    public static AddUserView addUserView;
+    public static DeleteUserView deleteUserView;
+    public static FindUserView findUserView;
+    public static ShowAllUserView showAllUserView;
+    public static UpdateEmailUserView updateEmailUserView;
+    public static UpdateNameUserView updateNameUserView;
+    public static ShowAllUserBooksView showAllUserBooksView;
+    public static GetBookByUserView getBookByUserView;
+    public static ReturnBookByUserView returnBookByUserView;
+    public static FindBookView findBookView;
+    public static AddBookView addBookView;
+    public static DeleteBookView deleteBookView;
+    public static UpdateNameBookView updateNameBookView;
+    public static ShowAllBookView showAllBookView;
+    public static BookMainView bookMainView;
 
     private static void Main(string[] args)
     {
-        string command = default;
-        while (true)
+        MainView mainView = new MainView();
+        userMainView = new UserMainView();
+        addUserView = new AddUserView(userRepository);
+        deleteUserView = new DeleteUserView(userRepository);
+        findUserView = new FindUserView(userRepository);
+        showAllUserView = new ShowAllUserView(userRepository);
+        updateEmailUserView = new UpdateEmailUserView(userRepository);
+        updateNameUserView  = new UpdateNameUserView(userRepository);
+        showAllUserBooksView = new ShowAllUserBooksView(userRepository);
+        getBookByUserView = new GetBookByUserView(userRepository);
+        returnBookByUserView = new ReturnBookByUserView(userRepository);
+        findBookView = new FindBookView(bookRepository);
+        addBookView = new AddBookView(bookRepository);
+        deleteBookView = new DeleteBookView(bookRepository);
+        updateNameBookView = new UpdateNameBookView(bookRepository);
+        showAllBookView = new ShowAllBookView(bookRepository);
+        bookMainView = new BookMainView();
+
+        try
         {
-            Console.Write("Введите название таблицы: ");
-            var db = Console.ReadLine();
-            do
-            {
-                ShowHelp();
-                command = Console.ReadLine();
-                switch (db)
-                {
-                    case nameof(Dbs.books):
-                        CommandManagerBooks(command);
-                        break;
-                    case nameof(Dbs.users):
-                        CommandManagerUser(command);
-                        break;
-                    default:
-                        Console.WriteLine("Неверный выбор таблицы");
-                        break;
-                }
-            } while (command != nameof(Commands.stop));
-
-
+            mainView.Show();
+        }
+        catch(EnteredTableException) 
+        {
+            Console.WriteLine("Неверно введено название таблицы\r\n");
+        }
+        catch(EnteredCommandException)
+        {
+            Console.WriteLine("Неверно введена команда\r\n");
         }
 
 
