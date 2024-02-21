@@ -1,4 +1,6 @@
 ﻿using EntityFramework.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,7 @@ namespace EntityFramework.Repositories
     public class UserRepository : IUserRepository
     {
         IBookRepository bookRepository;
+
         public UserRepository(IBookRepository bookRepository)
         {
             this.bookRepository = bookRepository;
@@ -41,7 +44,7 @@ namespace EntityFramework.Repositories
             {
 
                 var findUser = db.Users.Where(u => u.Name == user.Name && u.Email == user.Email).ToList().FirstOrDefault();
-                    
+
                 db.Users.Remove(findUser);
 
                 db.SaveChanges();
@@ -71,14 +74,12 @@ namespace EntityFramework.Repositories
         /// <returns></returns>
         public User FindById(int id)
         {
-            User user;
             using (var db = new AppContext())
             {
 
-                user = db.Users.Where(user => user.Id == id).ToList().FirstOrDefault();
-
+                return db.Users.Include(u => u.Books).Where(user => user.Id == id).ToList().FirstOrDefault();
             }
-            return user;
+
 
         }
 
@@ -125,20 +126,17 @@ namespace EntityFramework.Repositories
         /// <param name="bookId">Id книги</param>
         public void GetBookFromLibrary(int userId, int bookId)
         {
-            Book book = bookRepository.FindById(bookId);
-            if (book.User == null)
-            {
-                User user = FindById(userId);
-                using (var db = new AppContext())
-                {
-                    if (!user.Books.Contains(book))
-                    {
-                        user.Books.Add(book);
-                        db.Books.Where(b => b.Id == book.Id).ToList().FirstOrDefault().User = user;
-                        db.SaveChanges();
-                    }
 
-                }
+
+            using (var db = new AppContext())
+            {
+                Book book = db.Books.Where(b => b.Id == bookId).ToList().FirstOrDefault();
+                    User user = db.Users.Include(u => u.Books).Where(user => user.Id == userId).ToList().FirstOrDefault();
+
+                    user.Books.Add(book);
+                    db.SaveChanges();
+
+
             }
         }
 
@@ -149,16 +147,13 @@ namespace EntityFramework.Repositories
         /// <param name="bookId">Id книги</param>
         public void ReturnBookToLibrary(int userId, int bookId)
         {
-            Book book = bookRepository.FindById(bookId);
-            User user = FindById(userId);
+
             using (var db = new AppContext())
             {
-                if (!user.Books.Contains(book))
-                {
-                    db.Books.Where(b => b.Id == book.Id).ToList().FirstOrDefault().User = null;
-                    user.Books.Remove(book);
-                    db.SaveChanges();
-                }
+                Book book = db.Books.Include(b => b.Users).Where(book => book.Id == bookId).ToList().FirstOrDefault();
+                User user = db.Users.Include(u => u.Books).Where(user => user.Id == userId).ToList().FirstOrDefault();
+                user.Books.Remove(book);
+                db.SaveChanges();
 
             }
         }
