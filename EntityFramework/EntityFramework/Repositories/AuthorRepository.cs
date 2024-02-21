@@ -83,7 +83,17 @@ namespace EntityFramework.Repositories
             using (var db = new AppContext())
             {
 
-                return db.Authors.Include(a => a.Books).Where(author => author.Id == id).ToList().FirstOrDefault();
+                return db.Authors.Where(author => author.Id == id).ToList().FirstOrDefault();
+            }
+        }
+
+        public uint GetCountBooksByAuthorInLibrary(Author author)
+        {
+            using (var db = new AppContext())
+            {
+
+                return (uint)db.Authors.Include(a => a.Books).Where(a => a.FirstName == author.FirstName && a.LastName == a.LastName)
+                    .Select(a => a.Books.Count).FirstOrDefault();
             }
         }
     }

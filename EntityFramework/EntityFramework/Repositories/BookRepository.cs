@@ -1,5 +1,7 @@
 ﻿using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Linq;
 
 namespace EntityFramework.Repositories
 {
@@ -72,7 +74,7 @@ namespace EntityFramework.Repositories
             using (var db = new AppContext())
             {
 
-                book = db.Books.Where(user => user.Id == id).ToList().FirstOrDefault();
+                book = db.Books.Where(b => b.Id == id).ToList().FirstOrDefault();
 
             }
             return book;
@@ -92,6 +94,38 @@ namespace EntityFramework.Repositories
                 book.Name = value;
 
                 db.SaveChanges();
+
+            }
+        }
+
+        /// <summary>
+        /// Получает список книг определенного жанра и вышедших между определенными годами
+        /// </summary>
+        /// <param name="genre">жанр книги</param>
+        /// <param name="minYear">минимальный год выпуска</param>
+        /// <param name="maxYear">максимальный год выпуска</param>
+        /// <returns></returns>
+        public List<Book> GetBooksByGenreAndDate(Genre genre, uint minYear, uint maxYear)
+        {
+            using (var db = new AppContext())
+            {
+
+                return db.Books.Include(b => b.Genres)
+                    .Where(b => b.Genres.Contains(genre) && b.PublishYear >= minYear && b.PublishYear <= maxYear)
+                    .ToList();
+
+            }
+        }
+
+        public uint GetCountBooksByAuthorInLibrary(Author author)
+        {
+            using (var db = new AppContext())
+            {
+
+                var book = db.Books.Include(b => b.Author)
+                    .Where(b => b.Author.FirstName == author.FirstName && b.Author.LastName == author.LastName)
+                    .Sum(b => b.CountBookInLibrary);
+                return 0;
 
             }
         }

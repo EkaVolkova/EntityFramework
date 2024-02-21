@@ -14,6 +14,7 @@ namespace EntityFramework.View.Helper
         delete,
         updateName,
         showAll,
+        countAuthorBooks
 
     }
 

@@ -27,5 +27,4 @@ namespace EntityFramework.View.BookView
 
         }
     }
-
 }

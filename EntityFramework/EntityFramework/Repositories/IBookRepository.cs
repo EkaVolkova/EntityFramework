@@ -13,6 +13,7 @@ namespace EntityFramework.Repositories
         void Delete(Book book);
 
         void UpdateById(int id, string value);
+        public uint GetCountBooksByAuthorInLibrary(Author author);
 
     }
 }
