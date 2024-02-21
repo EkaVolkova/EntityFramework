@@ -172,7 +172,9 @@ namespace EntityFramework.Repositories
         public List<Book> FindAllBooks(int userId)
         {
             User user = FindById(userId);
-            return user.Books.ToList();
+            if (user.Books != null)
+                return user.Books.ToList();
+            return new List<Book>();
         }
 
 
