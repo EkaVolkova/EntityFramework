@@ -14,7 +14,7 @@ public class AppContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(@"Server=localhost;Database=ef;Trusted_Connection=True;Trust Server Certificate=true;Encrypt=false;");
+        optionsBuilder.UseSqlServer(@"Server=.\SQLEXPRESS;Database=ef;Trusted_Connection=True;Trust Server Certificate=true;Encrypt=false;");
     }
 }
 
