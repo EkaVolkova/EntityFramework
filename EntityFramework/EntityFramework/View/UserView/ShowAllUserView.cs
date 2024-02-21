@@ -1,6 +1,7 @@
 ﻿using EntityFramework.Repositories;
+using Microsoft.IdentityModel.Tokens;
 
-namespace EntityFramework.View
+namespace EntityFramework.View.UserView
 {
     public class ShowAllUserView
     {
@@ -13,6 +14,10 @@ namespace EntityFramework.View
         public void Show()
         {
             var users = userRepository.FindAll();
+            if (users.IsNullOrEmpty())
+            {
+                Console.WriteLine("В базе нет ни одного пользователя");
+            }
             foreach (var item in users)
             {
                 Console.WriteLine("Id: " + item.Id + ", Name: " + item.Name + ", Email: " + item.Email);

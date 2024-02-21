@@ -1,12 +1,13 @@
 ﻿using EntityFramework.Exceptions;
 using EntityFramework.View.Helper;
 
-namespace EntityFramework.View
+namespace EntityFramework.View.BookView
 {
     public class BookMainView
     {
         private void ShowCommands()
         {
+            Console.WriteLine();
             Console.WriteLine("Список команд для работы консоли:");
             Console.WriteLine(BookCommands.stop + ": прекращение работы с таблицей");
             Console.WriteLine(BookCommands.findById + ": найти книгу по ID");

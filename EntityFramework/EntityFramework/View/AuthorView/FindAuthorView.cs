@@ -1,0 +1,21 @@
+﻿using EntityFramework.Models;
+using EntityFramework.Repositories;
+
+namespace EntityFramework.View.AuthorView
+{
+    public class FindAuthorView
+    {
+        IAuthorRepository authorRepository;
+        public FindAuthorView(IAuthorRepository authorRepository)
+        {
+            this.authorRepository = authorRepository;
+        }
+        public void Show()
+        {
+            Console.WriteLine("Введите Id автора");
+            var id = int.Parse(Console.ReadLine());
+            var author = authorRepository.FindById(id);
+            Console.WriteLine(author.FirstName + " " + author.LastName);
+        }
+    }
+}

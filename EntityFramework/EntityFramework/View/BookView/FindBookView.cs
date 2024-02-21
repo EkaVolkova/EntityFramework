@@ -1,7 +1,7 @@
 ﻿using EntityFramework.Models;
 using EntityFramework.Repositories;
 
-namespace EntityFramework.View
+namespace EntityFramework.View.BookView
 {
     public class FindBookView
     {

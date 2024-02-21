@@ -1,17 +1,14 @@
 ﻿namespace EntityFramework.View.Helper
 {
-    enum UserCommands
+    enum GenreCommands
     {
         stop,
         findById,
         add,
         delete,
-        updateName,
-        updateEmail,
-        getBook,
-        returnBook,
         showAllBooks,
         showAll,
 
     }
+
 }

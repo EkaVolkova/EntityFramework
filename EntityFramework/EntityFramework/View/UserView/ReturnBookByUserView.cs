@@ -1,12 +1,12 @@
 ﻿using EntityFramework.Repositories;
 
-namespace EntityFramework.View
+namespace EntityFramework.View.UserView
 {
-    public class GetBookByUserView
+    public class ReturnBookByUserView
     {
         private IUserRepository userRepository;
 
-        public GetBookByUserView(IUserRepository userRepository)
+        public ReturnBookByUserView(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
         }
@@ -17,7 +17,7 @@ namespace EntityFramework.View
             Console.WriteLine("Введите Id книги");
             var bookId = int.Parse(Console.ReadLine());
 
-            userRepository.GetBookFromLibrary(userId, bookId);
+            userRepository.ReturnBookToLibrary(userId, bookId);
 
         }
     }

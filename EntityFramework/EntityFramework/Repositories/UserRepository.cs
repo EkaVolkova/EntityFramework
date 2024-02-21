@@ -131,10 +131,13 @@ namespace EntityFramework.Repositories
             using (var db = new AppContext())
             {
                 Book book = db.Books.Where(b => b.Id == bookId).ToList().FirstOrDefault();
+                if (book.CountBookInLibrary > 0)
+                {
                     User user = db.Users.Include(u => u.Books).Where(user => user.Id == userId).ToList().FirstOrDefault();
-
+                    book.CountBookInLibrary--;
                     user.Books.Add(book);
                     db.SaveChanges();
+                }
 
 
             }
@@ -153,6 +156,7 @@ namespace EntityFramework.Repositories
                 Book book = db.Books.Include(b => b.Users).Where(book => book.Id == bookId).ToList().FirstOrDefault();
                 User user = db.Users.Include(u => u.Books).Where(user => user.Id == userId).ToList().FirstOrDefault();
                 user.Books.Remove(book);
+                book.CountBookInLibrary++;
                 db.SaveChanges();
 
             }

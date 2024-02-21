@@ -2,10 +2,16 @@
 using EntityFramework.Models;
 using EntityFramework.Repositories;
 using EntityFramework.View;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using EntityFramework.View.AuthorView;
+using EntityFramework.View.BookView;
+using EntityFramework.View.GenreView;
+using EntityFramework.View.UserView;
 
 public class Program
 {
+    static AppContext appContext = new AppContext();
+    static IGenreRepository genreRepository = new GenreRepository();
+    static IAuthorRepository authorRepository = new AuthorRepository();
     static IBookRepository bookRepository = new BookRepository();
     static IUserRepository userRepository = new UserRepository(bookRepository);
 
@@ -26,6 +32,18 @@ public class Program
     public static UpdateNameBookView updateNameBookView;
     public static ShowAllBookView showAllBookView;
     public static BookMainView bookMainView;
+    public static AuthorMainView authorMainView;
+    public static AddAuthorView addAuthorView;
+    public static DeleteAuthorView deleteAuthorView;
+    public static FindAuthorView findAuthorView;
+    public static ShowAllAuthorBooksView ShowAllAuthorBooksView;
+    public static ShowAllAuthorsView ShowAllAuthorsView;
+    public static AddGenreView addGenreView;
+    public static DeleteGenreView deleteGenreView;
+    public static FindGenreView findGenreView;
+    public static ShowAllGenreBooksView showAllGenreBooksView;
+    public static ShowAllGenreView ShowAllGenreView;
+    public static GenreMainView genreMainView;
 
     private static void Main(string[] args)
     {
@@ -41,25 +59,40 @@ public class Program
         getBookByUserView = new GetBookByUserView(userRepository);
         returnBookByUserView = new ReturnBookByUserView(userRepository);
         findBookView = new FindBookView(bookRepository);
-        addBookView = new AddBookView(bookRepository);
+        addBookView = new AddBookView(bookRepository, authorRepository, genreRepository);
         deleteBookView = new DeleteBookView(bookRepository);
         updateNameBookView = new UpdateNameBookView(bookRepository);
         showAllBookView = new ShowAllBookView(bookRepository);
         bookMainView = new BookMainView();
+        authorMainView = new AuthorMainView();
+        addAuthorView = new AddAuthorView(authorRepository);
+        deleteAuthorView = new DeleteAuthorView(authorRepository);
+        findAuthorView = new FindAuthorView(authorRepository);
+        ShowAllAuthorBooksView = new ShowAllAuthorBooksView(authorRepository);
+        ShowAllAuthorsView = new ShowAllAuthorsView(authorRepository);
+        addGenreView = new AddGenreView(genreRepository);
+        deleteGenreView = new DeleteGenreView(genreRepository);
+        findGenreView = new FindGenreView(genreRepository);
+        showAllGenreBooksView = new ShowAllGenreBooksView(genreRepository);
+        ShowAllGenreView = new ShowAllGenreView(genreRepository);
+        genreMainView = new GenreMainView();
 
-        try
+        while (true)
         {
-            mainView.Show();
-        }
-        catch(EnteredTableException) 
-        {
-            Console.WriteLine("Неверно введено название таблицы\r\n");
-        }
-        catch(EnteredCommandException)
-        {
-            Console.WriteLine("Неверно введена команда\r\n");
-        }
 
+            try
+            {
+                mainView.Show();
+            }
+            catch (EnteredTableException)
+            {
+                Console.WriteLine("Неверно введено название таблицы\r\n");
+            }
+            catch (EnteredCommandException)
+            {
+                Console.WriteLine("Неверно введена команда\r\n");
+            }
+        }
 
 
 

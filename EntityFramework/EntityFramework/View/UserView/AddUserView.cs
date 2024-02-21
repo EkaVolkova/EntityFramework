@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFramework.View
+namespace EntityFramework.View.UserView
 {
     public class AddUserView
     {
         private IUserRepository userRepository;
 
-        public AddUserView(IUserRepository userRepository) 
+        public AddUserView(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
         }
@@ -23,8 +23,8 @@ namespace EntityFramework.View
             Console.WriteLine("Введите Email пользователя");
             var email = Console.ReadLine();
 
-            userRepository.Add(new User { Email = email, Name = name });
-            
+            userRepository.Add(new User { Email = email, Name = name, Books = new List<Book>() });
+
 
         }
     }

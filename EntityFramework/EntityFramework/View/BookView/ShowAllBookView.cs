@@ -1,6 +1,7 @@
 ﻿using EntityFramework.Repositories;
+using Microsoft.IdentityModel.Tokens;
 
-namespace EntityFramework.View
+namespace EntityFramework.View.BookView
 {
     public class ShowAllBookView
     {
@@ -13,6 +14,10 @@ namespace EntityFramework.View
         public void Show()
         {
             var books = bookRepository.FindAll();
+            if (books.IsNullOrEmpty())
+            {
+                Console.WriteLine("В базе нет ни одной книги");
+            }
             foreach (var item in books)
             {
                 Console.WriteLine("Id: " + item.Id + ", Name: " + item.Name + ", Year Publisher: " + item.PublishYear);

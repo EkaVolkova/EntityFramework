@@ -12,28 +12,34 @@ namespace EntityFramework.View
         enum Tables
         {
             books,
-            users
+            users,
+            authors,
+            genres
+
         }
 
         public void Show()
         {
-            while (true)
-            {
-                Console.Write("Выберите таблицу для работы: ");
+            Console.Write("Выберите таблицу для работы: ");
 
-                var table = Console.ReadLine();
-                Console.WriteLine();
-                switch (table)
-                {
-                    case nameof(Tables.users):
-                        Program.userMainView.Show();
-                        break;
-                    case nameof(Tables.books):
-                        Program.bookMainView.Show();
-                        break;
-                    default:
-                        throw new EnteredTableException();
-                }
+            var table = Console.ReadLine();
+            Console.WriteLine();
+            switch (table)
+            {
+                case nameof(Tables.users):
+                    Program.userMainView.Show();
+                    break;
+                case nameof(Tables.books):
+                    Program.bookMainView.Show();
+                    break;
+                case nameof(Tables.authors):
+                    Program.authorMainView.Show();
+                    break;
+                case nameof(Tables.genres):
+                    Program.genreMainView.Show();
+                    break;
+                default:
+                    throw new EnteredTableException();
             }
 
 

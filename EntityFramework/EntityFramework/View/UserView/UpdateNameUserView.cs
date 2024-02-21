@@ -1,12 +1,12 @@
 ﻿using EntityFramework.Repositories;
 
-namespace EntityFramework.View
+namespace EntityFramework.View.UserView
 {
-    public class UpdateEmailUserView
+    public class UpdateNameUserView
     {
         private IUserRepository userRepository;
 
-        public UpdateEmailUserView(IUserRepository userRepository)
+        public UpdateNameUserView(IUserRepository userRepository)
         {
             this.userRepository = userRepository;
         }
@@ -14,9 +14,9 @@ namespace EntityFramework.View
         {
             Console.WriteLine("Введите Id пользователя");
             var id = int.Parse(Console.ReadLine());
-            Console.WriteLine("Введите новый email");
-            var email = Console.ReadLine();
-            userRepository.UpdateEmailById(id, email);
+            Console.WriteLine("Введите новое имя");
+            var name = Console.ReadLine();
+            userRepository.UpdateNameById(id, name);
 
 
 

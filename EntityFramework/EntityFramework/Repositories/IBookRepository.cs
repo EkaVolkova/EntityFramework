@@ -8,10 +8,11 @@ namespace EntityFramework.Repositories
 
         public List<Book> FindAll();
 
-        void Add(Book book);
+        public void Add(Book book);
 
         void Delete(Book book);
 
         void UpdateById(int id, string value);
+
     }
 }

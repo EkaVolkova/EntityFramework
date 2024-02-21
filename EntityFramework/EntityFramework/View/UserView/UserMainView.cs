@@ -6,12 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EntityFramework.View
+namespace EntityFramework.View.UserView
 {
     public class UserMainView
     {
         private void ShowCommands()
         {
+            Console.WriteLine();
             Console.WriteLine("Список команд для работы консоли:");
             Console.WriteLine(UserCommands.stop + ": прекращение работы с таблицей");
             Console.WriteLine(UserCommands.findById + ": найти пользователя по ID");

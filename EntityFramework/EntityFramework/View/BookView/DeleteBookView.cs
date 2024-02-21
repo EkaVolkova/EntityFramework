@@ -1,13 +1,13 @@
 ﻿using EntityFramework.Models;
 using EntityFramework.Repositories;
 
-namespace EntityFramework.View
+namespace EntityFramework.View.BookView
 {
-    public class AddBookView
+    public class DeleteBookView
     {
         private IBookRepository bookRepository;
 
-        public AddBookView(IBookRepository bookRepository)
+        public DeleteBookView(IBookRepository bookRepository)
         {
             this.bookRepository = bookRepository;
         }
@@ -18,7 +18,7 @@ namespace EntityFramework.View
             Console.WriteLine("Введите год издания");
             var year = uint.Parse(Console.ReadLine());
 
-            bookRepository.Add(new Book { Name = name, PublishYear = year });
+            bookRepository.Delete(new Book { Name = name, PublishYear = year });
 
 
 

@@ -1,4 +1,6 @@
-﻿namespace EntityFramework.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace EntityFramework.Models
 {
     public class Book
     {
@@ -18,8 +20,28 @@
         public uint PublishYear { get; set; }
 
         /// <summary>
+        /// Количество книг
+        /// </summary>
+        public uint CountBookInLibrary {  get; set; }
+        
+        /// <summary>
         /// Пользователь, на руках у которого находится книга
         /// </summary>
-        public User User { get; set; }
+        public List<User> Users { get; set; } = new List<User>();
+
+        /// <summary>
+        /// Навигационное свойство id автора книги
+        /// </summary>
+        public int AuthorId { get; set; }
+
+        /// <summary>
+        /// Автор книги
+        /// </summary>
+        public Author Author { get; set; }
+
+        /// <summary>
+        /// Список жанров произведения
+        /// </summary>
+        public List<Genre> Genres { get; set; } = new List<Genre>();
     }
 }
