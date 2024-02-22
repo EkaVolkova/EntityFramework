@@ -47,6 +47,7 @@ namespace EntityFramework.View.BookView
                         break;
                     default:
                         Console.WriteLine("Введена неверная команда");
+                        return;
                 }
             } while (command != nameof(BookCommands.stop));
 

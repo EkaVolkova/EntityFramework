@@ -60,7 +60,7 @@ public class Program
         getBookByUserView = new GetBookByUserView(userRepository);
         returnBookByUserView = new ReturnBookByUserView(userRepository);
         findBookView = new FindBookView(bookRepository);
-        addBookView = new AddBookView(bookRepository, authorRepository, genreRepository);
+        addBookView = new AddBookView(bookRepository, genreRepository);
         deleteBookView = new DeleteBookView(bookRepository);
         updateNameBookView = new UpdateNameBookView(bookRepository);
         showAllBookView = new ShowAllBookView(bookRepository);

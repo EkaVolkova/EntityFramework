@@ -1,4 +1,5 @@
-﻿using EntityFramework.Models;
+﻿using EntityFramework.Exceptions;
+using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -61,7 +62,10 @@ namespace EntityFramework.Repositories
             using (var db = new AppContext())
             {
 
-                return db.Genres.Include(g => g.Books).Where(genre => genre.Id == id).ToList().FirstOrDefault();
+                var genre = db.Genres.Include(g => g.Books).Where(genre => genre.Id == id).FirstOrDefault();
+                if (genre != null)
+                    throw new GenreNotFoundException();
+                return genre;
             }
         }
     }

@@ -1,4 +1,5 @@
-﻿using EntityFramework.Repositories;
+﻿using EntityFramework.Exceptions;
+using EntityFramework.Repositories;
 
 namespace EntityFramework.View.BookView
 {
@@ -12,13 +13,22 @@ namespace EntityFramework.View.BookView
         }
         public void Show()
         {
-            Console.WriteLine("Введите Id книги");
-            var id = int.Parse(Console.ReadLine());
-            Console.WriteLine("Введите новое название");
-            var name = Console.ReadLine();
-            bookRepository.UpdateById(id, name);
-
-
+            try
+            {
+                Console.WriteLine("Введите Id книги");
+                var id = int.Parse(Console.ReadLine());
+                Console.WriteLine("Введите новое название");
+                var name = Console.ReadLine();
+                bookRepository.UpdateById(id, name);
+            }
+            catch (BookNotFoundException)
+            {
+                Console.WriteLine("Ошибка! Книга с таким id отсутствует в базе");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
         }
     }

@@ -1,4 +1,5 @@
-﻿using EntityFramework.Models;
+﻿using EntityFramework.Exceptions;
+using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Linq;
@@ -41,6 +42,9 @@ namespace EntityFramework.Repositories
             {
 
                 var findBook = db.Books.Where(b => b.Name == book.Name && b.PublishYear == book.PublishYear && b.AuthorId == book.AuthorId).ToList().FirstOrDefault();
+                if (findBook != null)
+                    throw new BookNotFoundException();
+
                 db.Books.Remove(findBook);
 
                 db.SaveChanges();
@@ -70,14 +74,14 @@ namespace EntityFramework.Repositories
         /// <returns></returns>
         public Book FindById(int id)
         {
-            Book book;
             using (var db = new AppContext())
             {
 
-                book = db.Books.Where(b => b.Id == id).ToList().FirstOrDefault();
-
+                Book book = db.Books.Where(b => b.Id == id).FirstOrDefault();
+                if (book != null)
+                    throw new BookNotFoundException();
+                return book;
             }
-            return book;
         }
 
         /// <summary>
@@ -91,6 +95,9 @@ namespace EntityFramework.Repositories
             {
 
                 var book = db.Books.Where(u => u.Id == id).ToList().FirstOrDefault();
+                if (book != null)
+                    throw new BookNotFoundException();
+
                 book.Name = value;
 
                 db.SaveChanges();

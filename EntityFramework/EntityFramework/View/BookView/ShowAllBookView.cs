@@ -13,17 +13,22 @@ namespace EntityFramework.View.BookView
         }
         public void Show()
         {
-            var books = bookRepository.FindAll();
-            if (books.IsNullOrEmpty())
+            try
             {
-                Console.WriteLine("В базе нет ни одной книги");
+                var books = bookRepository.FindAll();
+                if (books.IsNullOrEmpty())
+                {
+                    Console.WriteLine("В базе нет ни одной книги");
+                }
+                foreach (var item in books)
+                {
+                    Console.WriteLine("Id: " + item.Id + ", Name: " + item.Name + ", Year Publisher: " + item.PublishYear);
+                }
             }
-            foreach (var item in books)
+            catch (Exception ex)
             {
-                Console.WriteLine("Id: " + item.Id + ", Name: " + item.Name + ", Year Publisher: " + item.PublishYear);
+                Console.WriteLine(ex.Message);
             }
-
-
 
         }
     }
