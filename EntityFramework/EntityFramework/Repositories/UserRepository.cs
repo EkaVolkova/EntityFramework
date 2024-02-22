@@ -1,4 +1,5 @@
-﻿using EntityFramework.Models;
+﻿using EntityFramework.Exceptions;
+using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -44,7 +45,10 @@ namespace EntityFramework.Repositories
             {
 
                 var findUser = db.Users.Where(u => u.Name == user.Name && u.Email == user.Email).ToList().FirstOrDefault();
-
+                if (findUser != null)
+                {
+                    throw new UserNotFoundException();
+                }
                 db.Users.Remove(findUser);
 
                 db.SaveChanges();
@@ -77,7 +81,10 @@ namespace EntityFramework.Repositories
             using (var db = new AppContext())
             {
 
-                return db.Users.Include(u => u.Books).Where(user => user.Id == id).ToList().FirstOrDefault();
+                var user = db.Users.Include(u => u.Books).Where(user => user.Id == id).ToList().FirstOrDefault();
+                if (user != null)
+                    throw new UserNotFoundException();
+                return user;
             }
 
 
@@ -112,6 +119,8 @@ namespace EntityFramework.Repositories
             {
 
                 var user = db.Users.Where(u => u.Id == id).ToList().FirstOrDefault();
+                if (user != null)
+                    throw new UserNotFoundException();
                 user.Email = value;
 
                 db.SaveChanges();
@@ -131,13 +140,20 @@ namespace EntityFramework.Repositories
             using (var db = new AppContext())
             {
                 Book book = db.Books.Where(b => b.Id == bookId).ToList().FirstOrDefault();
-                if (book.CountBookInLibrary > 0)
-                {
-                    User user = db.Users.Include(u => u.Books).Where(user => user.Id == userId).ToList().FirstOrDefault();
-                    book.CountBookInLibrary--;
-                    user.Books.Add(book);
-                    db.SaveChanges();
-                }
+                if (book == null)
+                    throw new BookNotFoundException();
+
+                if (book.CountBookInLibrary == 0)
+                    throw new NoBooksInLibraryException();
+
+                User user = db.Users.Include(u => u.Books).Where(user => user.Id == userId).ToList().FirstOrDefault();
+
+                if(user == null)
+                    throw new UserNotFoundException();
+
+                book.CountBookInLibrary--;
+                user.Books.Add(book);
+                db.SaveChanges();
 
 
             }
@@ -154,7 +170,18 @@ namespace EntityFramework.Repositories
             using (var db = new AppContext())
             {
                 Book book = db.Books.Include(b => b.Users).Where(book => book.Id == bookId).ToList().FirstOrDefault();
+                
+                if (book == null)
+                    throw new BookNotFoundException();
+
                 User user = db.Users.Include(u => u.Books).Where(user => user.Id == userId).ToList().FirstOrDefault();
+                
+                if (user == null)
+                    throw new UserNotFoundException();
+
+                if (!user.Books.Contains(book))
+                    throw new UserHaveNotBookException();
+
                 user.Books.Remove(book);
                 book.CountBookInLibrary++;
                 db.SaveChanges();

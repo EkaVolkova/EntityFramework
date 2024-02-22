@@ -18,7 +18,11 @@ namespace EntityFramework.View.BookView
             Console.WriteLine("Введите год издания");
             var year = uint.Parse(Console.ReadLine());
 
-            bookRepository.Delete(new Book { Name = name, PublishYear = year });
+            Console.WriteLine("Введите Id автора книги");
+            var authorId = int.Parse(Console.ReadLine());
+
+
+            bookRepository.Delete(new Book { Name = name, PublishYear = year, AuthorId = authorId });
 
 
 

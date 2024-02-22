@@ -1,4 +1,5 @@
-﻿using EntityFramework.Models;
+﻿using EntityFramework.Exceptions;
+using EntityFramework.Models;
 using EntityFramework.Repositories;
 
 namespace EntityFramework.View.UserView
@@ -13,10 +14,22 @@ namespace EntityFramework.View.UserView
         }
         public void Show()
         {
-            Console.WriteLine("Введите Id пользователя");
-            var id = int.Parse(Console.ReadLine());
-            User user = userRepository.FindById(id);
-            Console.WriteLine("Id: " + user.Id + ", Name: " + user.Name + ", Email: " + user.Email);
+            try
+            {
+                Console.WriteLine("Введите Id пользователя");
+                var id = int.Parse(Console.ReadLine());
+                User user = userRepository.FindById(id);
+                Console.WriteLine("Id: " + user.Id + ", Name: " + user.Name + ", Email: " + user.Email);
+
+            }
+            catch (UserNotFoundException)
+            {
+                Console.WriteLine("Ошибка! Пользователь с такими именем и фамилией отсутствует в базе");
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
 
 
 

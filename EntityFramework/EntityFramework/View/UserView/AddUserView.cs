@@ -18,13 +18,19 @@ namespace EntityFramework.View.UserView
         }
         public void Show()
         {
-            Console.WriteLine("Введите имя пользователя");
-            var name = Console.ReadLine();
-            Console.WriteLine("Введите Email пользователя");
-            var email = Console.ReadLine();
+            try
+            {
+                Console.WriteLine("Введите имя пользователя");
+                var name = Console.ReadLine();
+                Console.WriteLine("Введите Email пользователя");
+                var email = Console.ReadLine();
 
-            userRepository.Add(new User { Email = email, Name = name, Books = new List<Book>() });
-
+                userRepository.Add(new User { Email = email, Name = name, Books = new List<Book>() });
+            }
+            catch (Exception ex) 
+            { 
+                Console.WriteLine(ex.Message); 
+            }
 
         }
     }
