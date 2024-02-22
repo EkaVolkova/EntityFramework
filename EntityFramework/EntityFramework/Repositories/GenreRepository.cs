@@ -70,5 +70,15 @@ namespace EntityFramework.Repositories
                 return genre;
             }
         }
+
+        public uint GetCountBooksByGenreInLibrary(Genre genre)
+        {
+            using (var db = new AppContext())
+            {
+
+                return (uint)db.Genres.Include(g => g.Books).Where(a => a.Name == genre.Name)
+                    .Select(a => a.Books.Count).FirstOrDefault();
+            }
+        }
     }
 }

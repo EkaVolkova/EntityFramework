@@ -8,7 +8,7 @@
         delete,
         showAllBooks,
         showAll,
-
+        countGenreBooks
     }
 
 }

@@ -9,11 +9,12 @@ namespace EntityFramework.View.GenreView
             Console.WriteLine();
             Console.WriteLine("Список команд для работы консоли:");
             Console.WriteLine(GenreCommands.stop + ": прекращение работы с таблицей");
-            Console.WriteLine(GenreCommands.findById + ": найти автора по ID");
-            Console.WriteLine(GenreCommands.add + ": добавление автора");
-            Console.WriteLine(GenreCommands.delete + ": удаление автора");
-            Console.WriteLine(GenreCommands.showAllBooks + ": просмотр всех книг автора");
-            Console.WriteLine(GenreCommands.showAll + ": просмотр всех авторов");
+            Console.WriteLine(GenreCommands.findById + ": найти жанр по ID");
+            Console.WriteLine(GenreCommands.add + ": добавление жанра");
+            Console.WriteLine(GenreCommands.delete + ": удаление жанра");
+            Console.WriteLine(GenreCommands.showAllBooks + ": просмотр всех книг жанра");
+            Console.WriteLine(GenreCommands.showAll + ": просмотр всех жанров");
+            Console.WriteLine(GenreCommands.countGenreBooks + ": количество книг в жанре");
 
             Console.WriteLine();
             Console.WriteLine("Введите команду: ");
@@ -45,6 +46,9 @@ namespace EntityFramework.View.GenreView
                         break;
                     case nameof(GenreCommands.showAll):
                         Program.ShowAllGenreView.Show();
+                        break;
+                    case nameof(GenreCommands.countGenreBooks):
+                        Program.showCountBooksByGenreInLibraryView.Show();
                         break;
                     default:
                         Console.WriteLine("Введена неверная команда");

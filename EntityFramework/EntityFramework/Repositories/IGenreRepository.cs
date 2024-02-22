@@ -14,6 +14,7 @@ namespace EntityFramework.Repositories
 
         public List<Book> FindAllBooks(int genreId);
 
+        public uint GetCountBooksByGenreInLibrary(Genre genre);
 
     }
 
