@@ -13,8 +13,12 @@ namespace EntityFramework.View.Helper
         add,
         delete,
         updateName,
-        showAll
-        
+        showAll,
+        hasBookByNameAndAuthorInLib,
+        hasBookByNameAndAuthorInUser,
+        showLast,
+        showAllAscSortByName,
+        showAllDescSortByPublishYear
 
     }
 

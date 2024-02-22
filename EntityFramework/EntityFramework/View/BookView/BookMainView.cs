@@ -15,6 +15,10 @@ namespace EntityFramework.View.BookView
             Console.WriteLine(BookCommands.delete + ": удаление книги");
             Console.WriteLine(BookCommands.updateName + ": обновление названия книги по Id");
             Console.WriteLine(BookCommands.showAll + ": просмотр всех книг");
+            Console.WriteLine(BookCommands.hasBookByNameAndAuthorInLib + ": есть ли книга определенного автора и с определенным названием в библиотеке");
+            Console.WriteLine(BookCommands.showLast + ": показать последнюю вышедшую книгу");
+            Console.WriteLine(BookCommands.showAllAscSortByName + ": список всех книг, отсортированного в алфавитном порядке по названию");
+            Console.WriteLine(BookCommands.showAllDescSortByPublishYear + ": список всех книг, отсортированного в порядке убывания года их выхода");
 
             Console.WriteLine();
             Console.WriteLine("Введите команду: ");
@@ -44,6 +48,18 @@ namespace EntityFramework.View.BookView
                         break;
                     case nameof(BookCommands.showAll):
                         Program.showAllBookView.Show();
+                        break;
+                    case nameof(BookCommands.hasBookByNameAndAuthorInLib):
+                        Program.hasBookByAuthorAndNameInLibView.Show();
+                        break;
+                    case nameof(BookCommands.showAllAscSortByName):
+                        Program.showAllBookAscedentSortByNameView.Show();
+                        break;
+                    case nameof(BookCommands.showAllDescSortByPublishYear):
+                        Program.showAllBookdescedentSortByPublishYesrView.Show();
+                        break;
+                    case nameof(BookCommands.showLast):
+                        Program.showLastPublisherBooksView.Show();
                         break;
                     default:
                         Console.WriteLine("Введена неверная команда");

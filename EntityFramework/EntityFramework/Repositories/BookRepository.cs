@@ -52,17 +52,34 @@ namespace EntityFramework.Repositories
         }
 
         /// <summary>
-        /// Поиск всех книг в бд
+        /// Поиск всех книг в бд с сортировкой
         /// </summary>
-        /// <returns>список книг</returns>
-        public List<Book> FindAll()
+        /// <param name="bookSortParams">Параметр сортировки</param>
+        /// <param name="sortType">Тип сортировки</param>
+        /// <returns>Список книг</returns>
+        public List<Book> FindAll(BookSortParams bookSortParams = BookSortParams.none, SortType sortType = SortType.ascending)
         {
             List<Book> allBooks;
             using (var db = new AppContext())
             {
-
-                allBooks = db.Books.ToList();
-
+                switch(bookSortParams)
+                {
+                    case BookSortParams.bookName:
+                        if(sortType == SortType.ascending)
+                            allBooks = db.Books.OrderBy(b => b.Name).ToList();
+                        else
+                            allBooks = db.Books.OrderByDescending(b => b.Name).ToList();
+                        break;
+                    case BookSortParams.bookPuplishYear:
+                        if (sortType == SortType.ascending)
+                            allBooks = db.Books.OrderBy(b => b.PublishYear).ToList();
+                        else
+                            allBooks = db.Books.OrderByDescending(b => b.PublishYear).ToList();
+                        break;
+                    default:
+                        allBooks = db.Books.ToList();
+                        break;
+                }
             }
             return allBooks;
         }
@@ -124,7 +141,56 @@ namespace EntityFramework.Repositories
             }
         }
 
-        
+        /// <summary>
+        /// Получать булевый флаг о том, есть ли книга определенного автора и с определенным названием в библиотеке
+        /// </summary>
+        /// <param name="name">название книги</param>
+        /// <param name="author">автор книг</param>
+        /// <returns>
+        ///     true  - книга есть в библиотеке
+        ///     false - книга отсутствует в библиотеке
+        /// </returns>
+        public bool HasBookByNameAndAutorInLib(string name, Author author)
+        {
+            using (var db = new AppContext())
+            {
 
+                var books = db.Books.Include(b => b.Author)
+                    .Where(b => b.Author.FirstName == author.FirstName && b.Author.LastName == author.LastName && b.Name == name).FirstOrDefault().CountBookInLibrary;
+                return books > 0;
+            }
+        }
+
+        /// <summary>
+        /// Получать булевый флаг о том, есть ли книга определенного автора и с определенным названием в библиотеке
+        /// </summary>
+        /// <param name="name">название книги</param>
+        /// <param name="authorId">id авторa книг</param>
+        /// <returns>
+        ///     true  - книга есть в библиотеке
+        ///     false - книга отсутствует в библиотеке
+        /// </returns>
+        public bool HasBookByNameAndAutorInLib(string name, int authorId)
+        {
+            using (var db = new AppContext())
+            {
+
+                var books = db.Books.Include(b => b.Author)
+                    .Where(b => b.AuthorId == authorId && b.Name == name).FirstOrDefault().CountBookInLibrary;
+                return books > 0;
+            }
+        }
+
+        /// <summary>
+        /// находит последнюю по году книгу
+        /// </summary>
+        /// <returns></returns>
+        public Book FindLastByYear()
+        {
+            using (var db = new AppContext())
+            {
+                return db.Books.OrderByDescending(b => b.PublishYear).FirstOrDefault();
+            }
+        }
     }
 }

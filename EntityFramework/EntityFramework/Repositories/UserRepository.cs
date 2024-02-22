@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -204,5 +205,14 @@ namespace EntityFramework.Repositories
         }
 
 
-    }
+        public bool HasBookByNameAndAutorInUser(string name, int authorId, int userId)
+        {
+            using (var db = new AppContext())
+            {
+                var countBooks = db.Users.Include(u => u.Books).Where(u => u.Id == userId).FirstOrDefault().Books.Where(b => b.Name == name && b.AuthorId == authorId).Count();
+
+                return countBooks > 0;
+            }
+        }
+     }
 }

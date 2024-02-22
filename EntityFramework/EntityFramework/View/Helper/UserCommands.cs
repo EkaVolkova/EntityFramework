@@ -12,6 +12,8 @@
         returnBook,
         showAllBooks,
         showAll,
+        hasBook,
+        countBook
 
     }
 }

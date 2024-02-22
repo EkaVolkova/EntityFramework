@@ -25,6 +25,7 @@ namespace EntityFramework.View.UserView
             Console.WriteLine(UserCommands.returnBook + ": вернуть книгу в библиотеку по Id пользователя и Id книги");
             Console.WriteLine(UserCommands.showAllBooks + ": просмотреть список всех книг, взятых пользователем из библиотеки, по Id пользователя");
             Console.WriteLine(UserCommands.showAll + ": просмотр всех пользователей");
+            Console.WriteLine(UserCommands.countBook + ": количество книг на руках у пользователя");
 
             Console.WriteLine();
             Console.WriteLine("Введите команду: ");
@@ -67,6 +68,9 @@ namespace EntityFramework.View.UserView
                     case nameof(UserCommands.showAll):
                         Program.showAllUserView.Show();
                         break;
+                    case nameof(UserCommands.countBook):
+                        Program.showAllUserView.Show();
+                        break;
                     default:
                         Console.WriteLine("Введена неверная команда");
                         break;
@@ -77,4 +81,5 @@ namespace EntityFramework.View.UserView
 
         }
     }
+
 }

@@ -3,11 +3,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace EntityFramework.View.BookView
 {
-    public class ShowAllBookView
+    public class ShowAllBookdescedentSortByPublishYesrView
     {
         private IBookRepository bookRepository;
 
-        public ShowAllBookView(IBookRepository bookRepository)
+        public ShowAllBookdescedentSortByPublishYesrView(IBookRepository bookRepository)
         {
             this.bookRepository = bookRepository;
         }
@@ -15,7 +15,7 @@ namespace EntityFramework.View.BookView
         {
             try
             {
-                var books = bookRepository.FindAll();
+                var books = bookRepository.FindAll(bookSortParams: BookSortParams.bookPuplishYear, sortType: SortType.descending );
                 if (books.IsNullOrEmpty())
                 {
                     Console.WriteLine("В базе нет ни одной книги");

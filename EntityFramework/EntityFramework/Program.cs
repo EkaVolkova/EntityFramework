@@ -45,6 +45,13 @@ public class Program
     public static ShowAllGenreView ShowAllGenreView;
     public static GenreMainView genreMainView;
     public static ShowCountBooksByAuthorInLibraryView showCountBooksByAuthorsInLibraryView;
+    public static ShowCountBooksByGenreInLibraryView showCountBooksByGenreInLibraryView;
+    public static HasBookByAuthorAndNameInLibView hasBookByAuthorAndNameInLibView;
+    public static HasBookByAuthorAndNameInUserView hasBookByAuthorAndNameInUserView;
+    public static CountBookByUserView countBookByUserView;
+    public static ShowAllBookAscedentSortByNameView showAllBookAscedentSortByNameView;
+    public static ShowAllBookdescedentSortByPublishYesrView showAllBookdescedentSortByPublishYesrView;
+    public static ShowLastPublisherBooksView showLastPublisherBooksView;
 
     private static void Main(string[] args)
     {
@@ -78,6 +85,15 @@ public class Program
         ShowAllGenreView = new ShowAllGenreView(genreRepository);
         genreMainView = new GenreMainView();
         showCountBooksByAuthorsInLibraryView = new ShowCountBooksByAuthorInLibraryView(authorRepository);
+        showCountBooksByGenreInLibraryView = new ShowCountBooksByGenreInLibraryView(genreRepository);
+        hasBookByAuthorAndNameInLibView = new HasBookByAuthorAndNameInLibView(bookRepository);
+        hasBookByAuthorAndNameInUserView = new HasBookByAuthorAndNameInUserView(userRepository);
+        countBookByUserView = new CountBookByUserView(userRepository);
+        showAllBookAscedentSortByNameView = new ShowAllBookAscedentSortByNameView(bookRepository);
+        showAllBookdescedentSortByPublishYesrView = new ShowAllBookdescedentSortByPublishYesrView(bookRepository);
+        showLastPublisherBooksView = new ShowLastPublisherBooksView(bookRepository);
+
+
 
         while (true)
         {

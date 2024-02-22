@@ -22,6 +22,7 @@ namespace EntityFramework.Repositories
 
         public List<Book> FindAllBooks(int userId);
 
+        bool HasBookByNameAndAutorInUser(string name, int authorId , int userId);
 
     }
 }
