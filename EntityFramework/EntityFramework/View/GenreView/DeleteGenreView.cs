@@ -1,4 +1,5 @@
-﻿using EntityFramework.Models;
+﻿using EntityFramework.Exceptions;
+using EntityFramework.Models;
 using EntityFramework.Repositories;
 
 namespace EntityFramework.View.GenreView
@@ -12,10 +13,20 @@ namespace EntityFramework.View.GenreView
         }
         public void Show()
         {
-            Console.WriteLine("Введите название жанра");
-            var name = Console.ReadLine();
-            genreRepository.Delete(new Genre { Name = name, Books = new List<Book>() });
-
+            try
+            {
+                Console.WriteLine("Введите название жанра");
+                var name = Console.ReadLine();
+                genreRepository.Delete(new Genre { Name = name, Books = new List<Book>() });
+            }
+            catch(GenreNotFoundException) 
+            {
+                Console.WriteLine("Ошибка! Жанр с таким названием не найден");
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }

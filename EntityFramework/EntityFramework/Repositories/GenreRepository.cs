@@ -31,6 +31,8 @@ namespace EntityFramework.Repositories
 
                 // Удаление
                 var findGenre = db.Genres.Where(g => g.Name == genre.Name).ToList().FirstOrDefault();
+                if (findGenre != null)
+                    throw new GenreNotFoundException();
                 db.Genres.Remove(findGenre);
 
                 db.SaveChanges();

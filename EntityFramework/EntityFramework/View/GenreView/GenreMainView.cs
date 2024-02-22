@@ -46,6 +46,9 @@ namespace EntityFramework.View.GenreView
                     case nameof(GenreCommands.showAll):
                         Program.ShowAllGenreView.Show();
                         break;
+                    default:
+                        Console.WriteLine("Введена неверная команда");
+                        break;
                 }
             } while (command != nameof(GenreCommands.stop));
         }
