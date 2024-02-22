@@ -2,6 +2,7 @@
 using EntityFramework.View.Helper;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -67,7 +68,8 @@ namespace EntityFramework.View.UserView
                         Program.showAllUserView.Show();
                         break;
                     default:
-                        throw new EnteredCommandException();
+                        Console.WriteLine("Введена неверная команда");
+                        break;
                 }
             } while (command != nameof(UserCommands.stop));
 

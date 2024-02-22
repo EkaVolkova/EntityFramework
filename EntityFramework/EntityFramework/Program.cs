@@ -90,10 +90,6 @@ public class Program
             {
                 Console.WriteLine("Неверно введено название таблицы\r\n");
             }
-            catch (EnteredCommandException)
-            {
-                Console.WriteLine("Неверно введена команда\r\n");
-            }
         }
 
 
