@@ -1,4 +1,5 @@
-﻿using EntityFramework.Models;
+﻿using EntityFramework.Exceptions;
+using EntityFramework.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,9 @@ namespace EntityFramework.Repositories
 
                 // Удаление
                 var findAuthor = db.Authors.Where(a => a.FirstName == author.FirstName && a.LastName == author.LastName).ToList().FirstOrDefault();
+                if (findAuthor != null)
+                    throw new AuthorNotFoundException();
+
                 db.Authors.Remove(findAuthor);
 
                 db.SaveChanges();
@@ -68,6 +72,10 @@ namespace EntityFramework.Repositories
         public List<Book> FindAllBooks(int authorId)
         {
             Author author = FindById(authorId);
+
+            if (author == null)
+                throw new AuthorNotFoundException();
+
             if (author.Books != null)
                 return author.Books.ToList();
             return new List<Book>();
@@ -83,7 +91,10 @@ namespace EntityFramework.Repositories
             using (var db = new AppContext())
             {
 
-                return db.Authors.Where(author => author.Id == id).ToList().FirstOrDefault();
+                var author = db.Authors.Where(author => author.Id == id).ToList().FirstOrDefault();
+                if (author != null)
+                    throw new AuthorNotFoundException();
+                return author;
             }
         }
 

@@ -12,14 +12,21 @@ namespace EntityFramework.View.AuthorView
         }
         public void Show()
         {
-            var authors = authorRepository.FindAll();
-            if (authors.IsNullOrEmpty())
+            try
             {
-                Console.WriteLine("В базе нет ни одного автора");
+                var authors = authorRepository.FindAll();
+                if (authors.IsNullOrEmpty())
+                {
+                    Console.WriteLine("В базе нет ни одного автора");
+                }
+                foreach (var item in authors)
+                {
+                    Console.WriteLine("Id: " + item.Id + ", First name: " + item.FirstName + ", Last name: " + item.LastName);
+                }
             }
-            foreach (var item in authors)
+            catch (Exception ex)
             {
-                Console.WriteLine("Id: " + item.Id + ", First name: " + item.FirstName + ", Last name: " + item.LastName);
+                Console.WriteLine(ex.Message);
             }
         }
     }

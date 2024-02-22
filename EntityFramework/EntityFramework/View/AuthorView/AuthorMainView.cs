@@ -54,10 +54,13 @@ namespace EntityFramework.View.AuthorView
                     case nameof(AuthorCommands.showAll):
                         Program.ShowAllAuthorsView.Show();
                         break;
+                    default:
+                        Console.WriteLine("Введена неверная команда");
+                        break;
                 }
 
             } while (command != nameof(AuthorCommands.stop));
-            
+
         }
     }
 

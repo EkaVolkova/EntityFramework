@@ -14,20 +14,26 @@ namespace EntityFramework.View.AuthorView
         }
         public void Show()
         {
-            Console.WriteLine("Введите имя автора");
-            var firstName = Console.ReadLine();
-            Console.WriteLine("Введите фамилию автора");
-            var lastName = Console.ReadLine();
-            var booksCount = authorRepository.GetCountBooksByAuthorInLibrary(new Author { FirstName = firstName, LastName = lastName });
-
-            if (booksCount == 0)
+            try
             {
-                Console.WriteLine("В базе нет ни одной книги");
+                Console.WriteLine("Введите имя автора");
+                var firstName = Console.ReadLine();
+                Console.WriteLine("Введите фамилию автора");
+                var lastName = Console.ReadLine();
+                var booksCount = authorRepository.GetCountBooksByAuthorInLibrary(new Author { FirstName = firstName, LastName = lastName });
+
+                if (booksCount == 0)
+                {
+                    Console.WriteLine("В базе нет ни одной книги");
+                }
+                else
+                    Console.WriteLine($"В базе {booksCount} книг {firstName} {lastName}");
+
             }
-            else
-                Console.WriteLine($"В базе {booksCount} книг {firstName} {lastName}");
-
-
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
     }
 }
