@@ -22,7 +22,7 @@ namespace EntityFramework.Models
         /// <summary>
         /// Количество книг
         /// </summary>
-        public uint CountBookInLibrary {  get; set; }
+        public uint CountBookInLibrary { get; set; } = 10;
         
         /// <summary>
         /// Пользователь, на руках у которого находится книга
