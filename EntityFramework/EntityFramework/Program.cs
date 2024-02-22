@@ -44,7 +44,7 @@ public class Program
     public static ShowAllGenreBooksView showAllGenreBooksView;
     public static ShowAllGenreView ShowAllGenreView;
     public static GenreMainView genreMainView;
-    public static ShowCountBooksByAuthorInLibrary showCountBooksByAuthorsInLibraryView;
+    public static ShowCountBooksByAuthorInLibraryView showCountBooksByAuthorsInLibraryView;
 
     private static void Main(string[] args)
     {
@@ -77,7 +77,7 @@ public class Program
         showAllGenreBooksView = new ShowAllGenreBooksView(genreRepository);
         ShowAllGenreView = new ShowAllGenreView(genreRepository);
         genreMainView = new GenreMainView();
-        showCountBooksByAuthorsInLibraryView = new ShowCountBooksByAuthorInLibrary(bookRepository);
+        showCountBooksByAuthorsInLibraryView = new ShowCountBooksByAuthorInLibraryView(authorRepository);
 
         while (true)
         {

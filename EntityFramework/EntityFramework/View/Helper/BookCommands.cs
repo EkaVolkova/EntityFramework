@@ -13,8 +13,8 @@ namespace EntityFramework.View.Helper
         add,
         delete,
         updateName,
-        showAll,
-        countAuthorBooks
+        showAll
+        
 
     }
 

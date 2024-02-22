@@ -19,6 +19,7 @@ namespace EntityFramework.View.AuthorView
             Console.WriteLine(AuthorCommands.delete + ": удаление автора");
             Console.WriteLine(AuthorCommands.showAllBooks + ": просмотр всех книг автора");
             Console.WriteLine(AuthorCommands.showAll + ": просмотр всех авторов");
+            Console.WriteLine(AuthorCommands.countAuthorBooks + ": количество всех книг автора");
 
             Console.WriteLine();
             Console.WriteLine("Введите команду: ");
@@ -46,6 +47,9 @@ namespace EntityFramework.View.AuthorView
                         break;
                     case nameof(AuthorCommands.showAllBooks):
                         Program.ShowAllAuthorBooksView.Show();
+                        break;
+                    case nameof(AuthorCommands.countAuthorBooks):
+                        Program.showCountBooksByAuthorsInLibraryView.Show();
                         break;
                     case nameof(AuthorCommands.showAll):
                         Program.ShowAllAuthorsView.Show();

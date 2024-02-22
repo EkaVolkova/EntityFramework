@@ -117,18 +117,7 @@ namespace EntityFramework.Repositories
             }
         }
 
-        public uint GetCountBooksByAuthorInLibrary(Author author)
-        {
-            using (var db = new AppContext())
-            {
-
-                var book = db.Books.Include(b => b.Author)
-                    .Where(b => b.Author.FirstName == author.FirstName && b.Author.LastName == author.LastName)
-                    .Sum(b => b.CountBookInLibrary);
-                return 0;
-
-            }
-        }
+        
 
     }
 }

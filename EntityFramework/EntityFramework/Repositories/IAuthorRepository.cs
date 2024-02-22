@@ -14,6 +14,8 @@ namespace EntityFramework.Repositories
 
         public List<Book> FindAllBooks(int userId);
 
+        public int FindIdByData(Author author);
+
         public uint GetCountBooksByAuthorInLibrary(Author author);
 
     }

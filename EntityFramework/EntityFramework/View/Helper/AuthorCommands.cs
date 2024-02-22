@@ -8,6 +8,7 @@
         delete,
         showAllBooks,
         showAll,
+        countAuthorBooks
 
     }
 

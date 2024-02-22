@@ -2,15 +2,15 @@
 using EntityFramework.Repositories;
 using Microsoft.IdentityModel.Tokens;
 
-namespace EntityFramework.View.BookView
+namespace EntityFramework.View.AuthorView
 {
-    public class ShowCountBooksByAuthorInLibrary
+    public class ShowCountBooksByAuthorInLibraryView
     {
-        private IBookRepository bookRepository;
+        private IAuthorRepository authorRepository;
 
-        public ShowCountBooksByAuthorInLibrary(IBookRepository bookRepository)
+        public ShowCountBooksByAuthorInLibraryView(IAuthorRepository authorRepository)
         {
-            this.bookRepository = bookRepository;
+            this.authorRepository = authorRepository;
         }
         public void Show()
         {
@@ -18,8 +18,8 @@ namespace EntityFramework.View.BookView
             var firstName = Console.ReadLine();
             Console.WriteLine("Введите фамилию автора");
             var lastName = Console.ReadLine();
+            var booksCount = authorRepository.GetCountBooksByAuthorInLibrary(new Author { FirstName = firstName, LastName = lastName });
 
-            var booksCount = bookRepository.GetCountBooksByAuthorInLibrary(new Author { FirstName = firstName, LastName = lastName});
             if (booksCount == 0)
             {
                 Console.WriteLine("В базе нет ни одной книги");

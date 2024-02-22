@@ -15,7 +15,6 @@ namespace EntityFramework.View.BookView
             Console.WriteLine(BookCommands.delete + ": удаление книги");
             Console.WriteLine(BookCommands.updateName + ": обновление названия книги по Id");
             Console.WriteLine(BookCommands.showAll + ": просмотр всех книг");
-            Console.WriteLine(BookCommands.countAuthorBooks + ": количество книг автора");
 
             Console.WriteLine();
             Console.WriteLine("Введите команду: ");
@@ -45,9 +44,6 @@ namespace EntityFramework.View.BookView
                         break;
                     case nameof(BookCommands.showAll):
                         Program.showAllBookView.Show();
-                        break;
-                    case nameof(BookCommands.countAuthorBooks):
-                        Program.showCountBooksByAuthorsInLibraryView.Show();
                         break;
                     default:
                         throw new EnteredCommandException();

@@ -87,6 +87,25 @@ namespace EntityFramework.Repositories
             }
         }
 
+        /// <summary>
+        /// Поиск id по имени и фамилии автора
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns></returns>
+        public int FindIdByData(Author author)
+        {
+            using (var db = new AppContext())
+            {
+
+                return db.Authors.Where(a => a.FirstName == author.FirstName && a.LastName == a.LastName).Select(a => a.Id).FirstOrDefault();
+            }
+        }
+
+        /// <summary>
+        /// Количество книг автора
+        /// </summary>
+        /// <param name="author"></param>
+        /// <returns></returns>
         public uint GetCountBooksByAuthorInLibrary(Author author)
         {
             using (var db = new AppContext())
